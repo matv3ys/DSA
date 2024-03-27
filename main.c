@@ -16,10 +16,13 @@ int main () {
     my_list = NULL;
     push_back_linked_list(&my_list, 1);
     push_back_linked_list(&my_list, 2);
+    push_back_linked_list(&my_list, 3);
+    print_linked_list(my_list);
+    inverse_linked_list(&my_list);
     print_linked_list(my_list);
     free_linked_list(my_list);
 
-    
+
 
     return 0;
 }

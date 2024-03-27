@@ -1,6 +1,15 @@
 #include <malloc.h>
 #include "linked_list.h"
 
+void push_node_front_linked_list(linked_list **lst, linked_list *node) {
+    if (*lst == NULL) {
+        *lst = node;
+    } else {
+        node->next = *lst;
+        *lst = node;
+    }
+}
+
 int push_front_linked_list(linked_list **lst, int value) {
     linked_list *node;
 
@@ -10,13 +19,7 @@ int push_front_linked_list(linked_list **lst, int value) {
     }
     node->value = value;
     node->next = NULL;
-
-    if (*lst == NULL) {
-        *lst = node;
-    } else {
-        node->next = *lst;
-        *lst = node;
-    }
+    push_node_front_linked_list(lst, node);
     return 0;
 }
 
@@ -42,6 +45,17 @@ int push_back_linked_list(linked_list **lst, int value) {
     return 0;
 }
 
+linked_list* pop_front_linked_list(linked_list **lst) {
+    linked_list *res;
+
+    if (*lst == NULL)
+        return NULL;
+    res = *lst;
+    *lst = (*lst)->next;
+    res->next = NULL;
+    return res;
+}
+
 void free_linked_list(linked_list *lst) {
     linked_list *cur;
 
@@ -51,6 +65,16 @@ void free_linked_list(linked_list *lst) {
         free(cur);
     }
 }
+
+void inverse_linked_list(linked_list **lst) {
+    struct linked_list *res = NULL;
+
+    while (*lst != NULL) {
+        push_node_front_linked_list(&res, pop_front_linked_list(lst));
+    }
+    *lst = res;
+}
+
 
 void print_linked_list(linked_list *lst) {
     if (lst == NULL) {
